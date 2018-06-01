@@ -1,0 +1,383 @@
+//控制心的颜色变化
+@keyframes starAnim {
+  0% {
+    fill: #ffffff;
+  }
+  100% {
+    fill: $color-red;
+  }
+}
+
+//控制svg加载一圈旋转
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.zoom-enter-active,
+.zoom-appear {
+  opacity: 0;
+  animation: kunmingZoomIn .3s cubic-bezier(0.08, 0.82, 0.17, 1);
+}
+
+.zoom-leave-active {
+  animation: kunmingOut .3s cubic-bezier(0.6, 0.04, 0.98, 0.34);
+}
+
+@keyframes kunmingZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes kunmingOut {
+  0% {
+    transform: scale(1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0, 0);
+  }
+}
+
+
+.modalzoom-enter-active,
+.modalzoom-appear {
+  opacity: 0;
+  animation: modalKunmingZoomIn .3s cubic-bezier(0.08, 0.82, 0.17, 1);
+}
+
+.modalzoom-leave-active {
+  animation: modalKunmingOut .3s cubic-bezier(0.6, 0.04, 0.98, 0.34);
+}
+
+@keyframes modalKunmingZoomIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(0, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(1, 1);
+  }
+}
+
+@keyframes modalKunmingOut {
+  0% {
+    transform: translate(-50%,-50%) scale(1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(0, 0);
+  }
+}
+
+@keyframes lazyLoadFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lazy-img-fadein[lazy=loaded] {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: lazyLoadFadeIn;
+}
+
+.lazy-img-fadein[lazy=loading] {
+  // width: 100%!important;
+  margin: auto;
+}
+
+.lazy-img-fadein[lazy-progressive=true] {
+  // width: 100%!important;
+  margin: auto;
+}
+
+.lazy-img-fadein[lazy=error] {
+  border-radius: 2px;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-name: lazyLoadFadeIn;
+}
+
+// .fade-enter-active, .fade-enter {
+//   animation: fadeUp .3s linear;
+// }
+// .fade-leave-active, .fade-leave-to{
+//   animation: fadeDown .3s linear;
+// }
+
+// @keyframes fadeUp{
+//   from {
+//     opacity: 0;
+//     transform: translateY(100%);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: none;
+//   }
+// }
+// @keyframes fadeDown{
+//   from {
+//     opacity: 1;
+//   }
+//   to {
+//     opacity: 0;
+//     transform: translateY(100%)
+//   }
+// }
+
+// 购物车图标变动
+.scale {
+  animation: scale .8s linear;
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.4);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// 加减操作
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+
+.bounce-leave-active {
+  /* animation: bounce-in .5s reverse; */
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// 企业套餐子项动画
+.reserve-enter-active {
+  animation: reserve-in .5s;
+}
+
+.reserve-leave-active {
+  animation: reserve-in .5s reverse;
+}
+
+@keyframes reserve-in {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.child-view {
+  height: 100%;
+  width: 100%;
+  // will-change: transform;
+  transition: transform .5s;
+}
+
+.child-sub-view {
+  transition: transform .5s;
+}
+
+.acce-3d {
+  transform: translateX(0) translateZ(0);
+}
+
+.slide-out-enter {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.slide-out-leave-active {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.slide-in-enter {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.slide-in-leave-active {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+
+.fade-transition {
+  transition: opacity .3s ease;
+}
+
+.fade-enter,
+.fade-leave {
+  opacity: 0;
+}
+
+
+
+.filterfade-enter-active, .filterfade-leave-active {
+  transition: opacity .5s
+}
+.filterfade-enter, .filterfade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
+}
+
+
+.filterFadeDown-enter-active, .filterFadeDown-enter {
+  animation: filterFadeDown .3s linear;
+}
+.filterFadeDown-leave-active, .filterFadeDown-leave-to{
+  animation: filterFadeUp .3s linear;
+}
+
+@keyframes filterFadeDown{
+  from {
+    // opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    // opacity: 1;
+    transform: none;
+  }
+}
+@keyframes filterFadeUp{
+  from {
+    // opacity: 1;
+  }
+  to {
+    // opacity: 0;
+    transform: translateY(-100%)
+  }
+}
+
+
+.slideRight-enter-active, .slideLeft-enter {
+  animation: slideRightIn .2s linear;
+}
+.slideRight-leave-active, .slideLeft-leave-to{
+  animation: slideRightOut .2s linear;
+}
+
+@keyframes slideRightIn{
+  from {
+    // opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    // opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes slideRightOut{
+  from {
+    transform: translateX(0);
+  }
+  to {
+    // opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.fadeScale-enter-active, .fadeScale-enter {
+  animation: fadeScaleIn .3s linear;
+}
+.fadeScale-leave-active, .fadeScale-leave-to{
+  animation: fadeScaleOut .3s linear;
+}
+
+@keyframes fadeScaleIn{
+  from {
+    opacity: 0;
+    transform: scale(0)
+  }
+  to {
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+@keyframes fadeScaleOut{
+  from {
+    opacity: 1;
+    transform: scale(1)
+  }
+  to {
+    opacity: 0;
+    transform: scale(0)
+  }
+}
+
+
+
+.fade-enter-active, .fade-enter {
+  animation: fadeIn .3s linear;
+}
+.fade-leave-active, .fade-leave-to{
+  animation: fadeOut .3s linear;
+}
+
+@keyframes fadeIn{
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut{
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
