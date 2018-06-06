@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0
+  }
+</style>
+
+<body>
+  <img id='img' src='' alt='图片' />
+  <input type="file" id='aaaaa'> 文件转base64
+  <input type="file" id='imgfile' />
+  <br/>
+  <img id="base1" src="" />
+  <br/>
+  <img id="base2" src="" />
+</body>
+<script>
+  var obj = null
+  aaaaa.onchange = function change() {
+    if (this.files && this.files.length) {
+      const files = this.files
+      for (let i = 0; i < files.length; i++) {
+        parseFile(files[i], i)
+        console.log(files[i])
+      }
+    }
+    console.log(this.value)
+  }
+
+  let parseFile = (file, index) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      console.log(file, e)
+      const dataURL = e.target.result
+      if (!dataURL) {
+        console.log('上传失败')
+      }
+
+      let orientation = 1;
+      getOrientation(file, (res) => {
+        // -2: not jpeg , -1: not defined
+        console.log(res)
+        if (res > 0) {
+          orientation = res;
+        }
+      });
+      obj = {
+        url: dataURL,
+        // orientation,
+        file,
+      }
+      img.src = dataURL
+    };
+    reader.readAsDataURL(file);
+  }
+  let getOrientation = (file, callback) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const view = new DataView(e.target.result)
+      if (view.getUint16(0, false) !== 0xFFD8) {
+        return callback(-2);
+      }
+      let length = view.byteLength;
+      let offset = 2;
+      while (offset < length) {
+        const marker = view.getUint16(offset, false);
+        offset += 2;
+        if (marker === 0xFFE1) {
+          let tmp = view.getUint32(offset += 2, false);
+          if (tmp !== 0x45786966) {
+            return callback(-1);
+          }
+          let little = view.getUint16(offset += 6, false) === 0x4949;
+          offset += view.getUint32(offset + 4, little);
+          let tags = view.getUint16(offset, little);
+          offset += 2;
+          for (let i = 0; i < tags; i++) {
+            if (view.getUint16(offset + (i * 12), little) === 0x0112) {
+              return callback(view.getUint16(offset + (i * 12) + 8, little));
+            }
+          }
+        } else if ((marker & 0xFF00) !== 0xFF00) {
+          break;
+        } else {
+          offset += view.getUint16(offset, false)
+        }
+      }
+      return callback(-1);
+    };
+    reader.readAsArrayBuffer(file.slice(0, 64 * 1024))
+  }
+</script>
+<script>
+  var img = new Image();
+  var input = document.getElementById("imgfile");
+  //检测浏览器是否支持FileReader
+  if (typeof (FileReader) === 'undefined') {
+    result.innerHTML = "抱歉，你的浏览器不支持 FileReader，请使用现代浏览器操作！";
+    input.setAttribute('disabled', 'disabled');
+  } else {
+    //开启监听
+    input.addEventListener('change', readFile, false);
+  }
+  function readFile() {
+    var base64Code = ''
+    var file = this.files[0];
+    //限定上传文件的类型，判断是否是图片类型
+    if (!/image\/\w+/.test(file.type)) {
+      alert("只能选择图片");
+      return false;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function(e) {
+      base64Code = this.result;
+      base1.src = base64Code
+      ImageToBase(base64Code)
+    }
+  }
+  function ImageToBase(url) {
+    img.src = url;
+    var canvas = $("<canvas>")[0]
+
+    var ctx = canvas.getContext('2d')
+
+    img.onload = function() {
+      var w = img.width * 2;
+      var h = img.height * 2;
+      canvas.width = w;
+      canvas.height = h;
+
+      ctx.drawImage(img, 0, 0, w, h)
+
+      var cropStr = canvas.toDataURL("image/png", 1);
+      base2.src = cropStr
+      console.log('png:', cropStr)
+
+    }
+
+  }
+
+  function numToCN(num) {
+    // num += 1
+    var arr = ['十', '一', '二', '三', '四', '五', '六', '七', '八', '九']
+    if (num === 100) {
+      return '一百'
+    } else {
+      return (num + '').replace(/(\d)(\d)/, function($0, $1, $2) {
+        return arr[$1]
+      })
+    }
+  }
+  console.log(numToCN(99), numToCN(19), numToCN(9), numToCN(29), numToCN(10))
+</script>
+</script>
+
+</html>
