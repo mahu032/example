@@ -1,4 +1,4 @@
-// 限时优惠商品-1111
+// 限时优惠商品
 export default {
   data() {
     return {
